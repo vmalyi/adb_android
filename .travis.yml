@@ -1,8 +1,8 @@
 language: python
 python:
   - "2.7"
-  - "3.4"
-# command to install dependencies
-#install: "pip install -r requirements.txt"
-# command to run tests
-#script: nosetests
+
+install: python src/setup.py install
+script: python test/adb_test.py
+notifications:
+    email: false
