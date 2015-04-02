@@ -1,12 +1,7 @@
 language: python
 python:
   - "2.7"
-before_install: pwd
-before_install: ls -l
-before_install: cd src
-before_install: pwd
-before_install: ls -l
-install: python src/setup.py install
+install: pip install -e src/
 script: python test/adb_test.py
 notifications:
     email: false
