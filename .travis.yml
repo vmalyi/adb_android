@@ -11,6 +11,8 @@ install:
   #install adb library
   - sudo pip install -e src/
 script:
+  - adb shell cd /data/media/0
+  - ls
   - python test/adb_test.py
 notifications:
     email: false
