@@ -1,7 +1,13 @@
-language: python
-python:
-  - "2.7"
-install: pip install -e src/
-script: python test/adb_test.py
+language: android
+android:
+  components:
+    - sys-img-armeabi-v7a-android-19
+before_script:
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+script:
+  - adb devices
 notifications:
     email: false
