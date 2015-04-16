@@ -5,7 +5,7 @@ import os
 import ntpath
 import adb
 
-DEST_FOLDER_TARGET = '/data/media/0/Download/'
+DEST_FOLDER_TARGET = '/data/media/0/'
 NON_EXISTING_DIR = '/non-existing-dir/'
 dest_folder_host = ''
 
@@ -119,18 +119,6 @@ class TestExecResultsHandler(unittest.TestCase):
         global adb_pull
         result = adb.exec_result_handler(adb_pull)
         self.assertEqual(result, True)
-
-    def test_exec_result_handler_n_uncomplete_argument(self):
-        #4th argument is missing in adb_command
-        adb_command = [ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target]
-        result = adb.exec_result_handler(adb_command)
-        self.assertEqual(result, False)
-
-    def test_exec_result_handler_n_invalid_command_syntax(self):
-        #missing ADB_COMMAND_PREFIX
-        adb_command = [ADB_COMMAND_PUSH, tmp_file.name, DEST_FOLDER_TARGET ]
-        result = adb.exec_result_handler(adb_command)
-        self.assertEqual(result, False)
 
     def test_exec_result_handler_n_missing_argument(self):
         #no argument at all
