@@ -3,9 +3,11 @@ adb-lib
 
 A python module which makes interaction with android adb easier.
 
-### Build status
+### Build status & coverage status
 
 [![Build Status](https://travis-ci.org/vmalyi/adb-lib.svg?branch=master)](https://travis-ci.org/vmalyi/adb-lib)
+
+[![Coverage Status](https://coveralls.io/repos/vmalyi/adb-lib/badge.svg)](https://coveralls.io/r/vmalyi/adb-lib)
 
 
 ### Purpose
