@@ -120,6 +120,12 @@ class TestExecResultsHandler(unittest.TestCase):
         result = adb.exec_result_handler(adb_pull)
         self.assertEqual(result, True)
 
+    def test_exec_result_handler_p_uncomplete_argument(self):
+        #4th argument is missing in adb_command
+        adb_command = [ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target]
+        result = adb.exec_result_handler(adb_command)
+        self.assertEqual(result, True)
+
     def test_exec_result_handler_n_missing_argument(self):
         #no argument at all
         adb_command = None
