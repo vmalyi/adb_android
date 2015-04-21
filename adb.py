@@ -17,11 +17,6 @@ def push(src, dest):
         adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PUSH, src, dest ]
         print('*** executing ' + str(adb_full_cmd))
         return exec_result_handler(adb_full_cmd)
-        # exec_res = subprocess.call(adb_full_cmd)
-        # if exec_res == 0:
-        #     return True
-        # else:
-        #     return False
     else:
         return False
 
@@ -31,11 +26,6 @@ def pull(src, dest):
         adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, src, dest ]
         print('*** executing ' + str(adb_full_cmd))
         return exec_result_handler(adb_full_cmd)
-        # exec_res = subprocess.call(adb_full_cmd)
-        # if exec_res == 0:
-        #     return True
-        # else:
-        #     return False
     else:
         return False
 
