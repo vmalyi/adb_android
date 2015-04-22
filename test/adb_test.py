@@ -34,7 +34,7 @@ def generate_tmp_file():
     """Generates temp file and pushes it to target"""
     global tmp_file
     if not tmp_file:
-        tmp_file = tempfile.NamedTemporaryFile(delete=False)
+        tmp_file = tempfile.NamedTemporaryFile(delete=True)
         print('*** preparing temporary file with name ' + tmp_file.name)
     adb.push(tmp_file.name, DEST_FOLDER_TARGET)
 
