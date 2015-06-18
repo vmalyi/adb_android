@@ -2,7 +2,6 @@ import unittest
 import tempfile
 import sys
 import os
-import ntpath
 import adb
 
 DEST_FOLDER_TARGET = '/data/media/0/'
@@ -40,7 +39,7 @@ def generate_tmp_file():
 
     #gets full path on target for tmp_file
     global tmp_file_on_target
-    tmp_file_on_target = (DEST_FOLDER_TARGET + ntpath.basename(tmp_file.name))
+    tmp_file_on_target = (DEST_FOLDER_TARGET + os.path.basename(tmp_file.name))
     print('*** getting path to tmp_file ' + str(tmp_file.name))
 
     #gets path to dest_folder_host
