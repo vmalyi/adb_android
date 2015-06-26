@@ -23,6 +23,8 @@ some useful features.
 Currently following adb commands are **supported**:
 * adb push
 * adb pull
+* adb shell
+* adb devices
 
 Currently following adb commands are **not supported**:
 * adb install
@@ -32,20 +34,30 @@ Currently following adb commands are **not supported**:
 * adb wait-for-device
 * adb start-server
 * adb kill-server
-* adb shell
 * adb logcat
 * adb bugreport
 * adb jdwp
-* adb devices
 * adb help
 * adb version
 * adb -d
 * adb -e
 * adb -s
 
-### How to install?
+### How to install and use?
 
-TBD
+ 1. Execute install command in root folder:
+```
+python setup.py install
+```
+ 2. Import adb to your module and just use it:
+```
+import adb
+
+adb.push(/tmp/file.txt, /data/media/0)
+adb.pull(/data/media/0/file.txt, /tmp/)
+
+...
+```
 
 ### How to contribute?
 
