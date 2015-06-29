@@ -2,6 +2,7 @@ import unittest
 import tempfile
 import sys
 import os
+import re
 import adb
 
 DEST_FOLDER_TARGET = '/data/media/0/'
@@ -20,6 +21,12 @@ ADB_COMMAND_FORWARD = 'forward'
 
 tmp_file = None
 tmp_file_on_target = None
+
+path_to_valid_apk = 'files/valid.apk'
+valid_package_name = 'com.example.android.valid'
+path_to_invalid_apk = 'files/invalid.apk'
+invalid_package_name = 'com.non-existing-app'
+exp_install_cmd_output = re.compile(('package:' + valid_package_name))
 
 adb_push = None
 adb_pull = None
@@ -134,26 +141,26 @@ class TestExecCommand(unittest.TestCase):
         adb_pull = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target, \
         dest_folder_host ]
 
-    def test_exec_command_p_adb_push(self):
+    def test_exec_p_adb_push(self):
         global adb_push
         global positive_exp_result_wo_output
         result = adb.exec_command(adb_push)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_command_p_adb_pull(self):
+    def test_exec_p_adb_pull(self):
         global adb_pull
         global positive_exp_result_wo_output
         result = adb.exec_command(adb_pull)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_command_p_uncomplete_argument(self):
+    def test_exec_p_uncomplete_argument(self):
         #4th argument is missing in adb_command
         global positive_exp_result_wo_output
         adb_command = [ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target]
         result = adb.exec_command(adb_command)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_command_n_missing_argument(self):
+    def test_exec_n_missing_argument(self):
         #no argument at all
         adb_command = None
         result = adb.exec_command(adb_command)
@@ -161,6 +168,63 @@ class TestExecCommand(unittest.TestCase):
 
         #todo: add negative tests for adb_push/pull where command is misspelled
         #like global misspelled_adb_push = [ADB_COMMAND_PREFIX, 'pul']
+
+class TestInstallCommand(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        """Deletes *.apk if it already installed"""
+        global valid_package_name
+        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if re.search(exp_install_cmd_output, result[1]):
+            print('*** uninstalling existing ' + valid_package_name)
+            adb.uninstall(valid_package_name)
+        else:
+            print('*** no need to uninstall ' + valid_package_name + ' since\
+            it is not yet installed')
+
+    def test_install_p(self):
+        global path_to_valid_apk
+        result = adb.install(path_to_valid_apk)
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_install_p_reinstall(self):
+        global path_to_valid_apk
+        grep_result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if re.search(exp_install_cmd_output, grep_result[1]):
+            result = adb.install(path_to_valid_apk, '-r')
+        else:
+            self.test_install_p()
+            result = adb.install(path_to_valid_apk, '-r')
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_install_n_invalid_apk(self):
+        global path_to_invalid_apk
+        result = adb.install(path_to_invalid_apk)
+        self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
+
+class TestUninstallCommand(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        """ Installs apk before test execution """
+        global valid_package_name
+        global path_to_valid_apk
+        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if not re.search(exp_install_cmd_output, result[1]):
+            print('*** installing ' + valid_package_name)
+            adb.install(path_to_valid_apk)
+        else:
+            print('*** no need to install ' + valid_package_name + ' since it is\
+            already installed')
+
+    def test_uninstall_p(self):
+        global valid_package_name
+        result = adb.uninstall(valid_package_name)
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_uninstall_n_invalid_package_name(self):
+        global invalid_package_name
+        result = adb.uninstall(invalid_package_name)
+        self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
 if __name__ == '__main__':
     unittest.main()
