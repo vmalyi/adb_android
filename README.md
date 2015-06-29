@@ -55,8 +55,8 @@ python setup.py install
 ```
 import adb
 
-adb.push(/tmp/file.txt, /data/media/0)
-adb.pull(/data/media/0/file.txt, /tmp/)
+adb.push('/tmp/file.txt', '/data/media/0')
+adb.pull('/data/media/0/file.txt', '/tmp/')
 
 ...
 ```
