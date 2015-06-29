@@ -25,9 +25,11 @@ Currently following adb commands are **supported**:
 * adb pull
 * adb shell
 * adb devices
+* adb install
+* adb uninstall
 
 Currently following adb commands are **not supported**:
-* adb install
+
 * adb forward
 * adb get-serialno
 * adb get-state
@@ -61,6 +63,6 @@ adb.pull(/data/media/0/file.txt, /tmp/)
 
 ### How to contribute?
 
-* To implement adb commands which are currently not supported by the module (see above)
-* To increase unit test coverage for already supported commands
-* To bring your ideas!
+* Implement adb commands which are currently not supported by the module (see above)
+* Increase unit test coverage for already supported commands
+* Bring your own ideas!
