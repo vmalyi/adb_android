@@ -2,6 +2,7 @@ import unittest
 import tempfile
 import sys
 import os
+import re
 import adb
 
 DEST_FOLDER_TARGET = '/data/media/0/'
@@ -21,9 +22,11 @@ ADB_COMMAND_FORWARD = 'forward'
 tmp_file = None
 tmp_file_on_target = None
 
-path_to_valid_apk = '/files/valid.apk'
+path_to_valid_apk = 'files/valid.apk'
 valid_package_name = 'com.example.android.valid'
-path_to_invalid_apk = '/files/invalid.apk'
+path_to_invalid_apk = 'files/invalid.apk'
+invalid_package_name = 'com.non-existing-app'
+exp_install_cmd_output = re.compile(('package:' + valid_package_name))
 
 adb_push = None
 adb_pull = None
@@ -170,13 +173,14 @@ class TestInstallCommand(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         """Deletes *.apk if it already installed"""
-        result = adb.shell('adb shell pm list packages | grep' +  valid_package_name)
-        if str(result[1]) == ('package:' + valid_package_name):
+        global valid_package_name
+        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if re.search(exp_install_cmd_output, result[1]):
             print('*** uninstalling existing ' + valid_package_name)
             adb.uninstall(valid_package_name)
         else:
-            print('*** no need to uninstall ' + valid_package_name + ' since \
-            it is not yet isntalled')
+            print('*** no need to uninstall ' + valid_package_name + ' since\
+            it is not yet installed')
 
     def test_install_p(self):
         global path_to_valid_apk
@@ -185,13 +189,42 @@ class TestInstallCommand(unittest.TestCase):
 
     def test_install_p_reinstall(self):
         global path_to_valid_apk
-        test_install_p()
-        result = adb.install(path_to_valid_apk, '-r')
+        grep_result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if re.search(exp_install_cmd_output, grep_result[1]):
+            result = adb.install(path_to_valid_apk, '-r')
+        else:
+            self.test_install_p()
+            result = adb.install(path_to_valid_apk, '-r')
+        self.assertRegexpMatches(result[1], 'Success')
 
     def test_install_n_invalid_apk(self):
         global path_to_invalid_apk
         result = adb.install(path_to_invalid_apk)
         self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
+
+class TestUninstallCommand(unittest.TestCase):
+    @classmethod
+    def setUpClass(self):
+        """ Installs apk before test execution """
+        global valid_package_name
+        global path_to_valid_apk
+        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        if not re.search(exp_install_cmd_output, result[1]):
+            print('*** installing ' + valid_package_name)
+            adb.install(path_to_valid_apk)
+        else:
+            print('*** no need to install ' + valid_package_name + ' since it is\
+            already installed')
+
+    def test_uninstall_p(self):
+        global valid_package_name
+        result = adb.uninstall(valid_package_name)
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_uninstall_n_invalid_package_name(self):
+        global invalid_package_name
+        result = adb.uninstall(invalid_package_name)
+        self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
 if __name__ == '__main__':
     unittest.main()
