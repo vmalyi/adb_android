@@ -30,10 +30,10 @@ def pull(src, dest):
     else:
         return False
 
-def devices():
+def devices(opt_l=''):
     #todo: add support for all possible options
     """Provides list of available devices"""
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES ]
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES, opt_l ]
     return exec_command(adb_full_cmd)
 
 def shell(subcommand):

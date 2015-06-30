@@ -104,10 +104,14 @@ class TestPullCommand(unittest.TestCase):
 
 class TestDevicesCommand(unittest.TestCase):
     def test_devices_p(self):
-        #todo: add logic for checking whether device ID has been returned
+        #todo: return also device ID
         result = adb.devices()
         #don't check output code in result but presence of "device" string
         self.assertRegexpMatches(result[1], '\\tdevice')
+
+    def test_devices_p_l_option(self):
+        result = adb.devices('-l')
+        self.assertRegexpMatches(result[1], 'model:')
 
 class TestShellCommand(unittest.TestCase):
     def test_shell_p(self):
