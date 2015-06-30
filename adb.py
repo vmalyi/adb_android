@@ -31,12 +31,13 @@ def pull(src, dest):
         return False
 
 def devices():
-    #add support for all possible options
+    #todo: add support for all possible options
     """Provides list of available devices"""
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES ]
     return exec_command(adb_full_cmd)
 
 def shell(subcommand):
+    #todo: add support of -s option
     """Executes subcommand in adb shell
 
     accepts string as "subcommand" argument
@@ -47,7 +48,7 @@ def shell(subcommand):
     return exec_command(adb_full_cmd)
 
 def install(apk_path, opt_reinstall=''):
-    #add support for all possible options
+    #todo: add support for all possible options
     """Installs apk on device.
 
     Supported options:
@@ -58,7 +59,7 @@ def install(apk_path, opt_reinstall=''):
     return exec_command(adb_full_cmd)
 
 def uninstall(apk_name):
-    #add support for all possible options
+    #todo: add support for all possible options
     """Uninstall apk from device.
 
     Supported options:
@@ -78,7 +79,7 @@ def exec_command(adb_full_cmd):
     if adb_full_cmd is not None:
         try:
             t = tempfile.TemporaryFile()
-            #remove empty elements if func argument hasn't been used
+            #removes empty list elements if func argument hasn't been used
             final_adb_full_cmd = []
             for e in adb_full_cmd:
                 if e != '':
