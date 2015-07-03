@@ -1,4 +1,4 @@
-adb-lib
+adb
 ==========
 
 Enables android adb in your python script.
@@ -7,16 +7,9 @@ Enables android adb in your python script.
 
 [![Build Status](https://travis-ci.org/vmalyi/adb-lib.svg?branch=master)](https://travis-ci.org/vmalyi/adb-lib)
 
-[![Coverage Status](https://coveralls.io/repos/vmalyi/adb-lib/badge.svg)](https://coveralls.io/r/vmalyi/adb-lib)
-
-
 ### Purpose
 
-This module can be used by everyone who implements some android-related stuff
-on Python and at the same time has to interact with android adb.
-
-It makes interaction with android adb easier because of proper error handling and
-some useful features.
+This python package is a wrapper for android adb. It allows you to execute android adb commands in your python script.
 
 ### What's supported?
 
