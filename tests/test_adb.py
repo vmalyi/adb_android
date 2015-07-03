@@ -1,8 +1,7 @@
-import unittest
-import tempfile
-import sys
-import os
-import re
+import sys, os, inspect, re, tempfile, unittest
+adb = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],'../adb')))
+if adb not in sys.path:
+    sys.path.insert(0, adb)
 import adb
 
 DEST_FOLDER_TARGET = '/data/media/0/'
