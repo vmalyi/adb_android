@@ -1,7 +1,7 @@
 adb-lib
 ==========
 
-A python module which makes interaction with android adb easier.
+Enables android adb in your python script.
 
 ### Build status & coverage status
 
