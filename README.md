@@ -5,7 +5,7 @@ Enables android adb in your python script.
 
 ### Build status & coverage status
 
-[![Build Status](https://travis-ci.org/vmalyi/adb-lib.svg?branch=master)](https://travis-ci.org/vmalyi/adb-lib)
+[![Build Status](https://travis-ci.org/vmalyi/adb.svg?branch=master)](https://travis-ci.org/vmalyi/adb)
 
 ### Purpose
 
