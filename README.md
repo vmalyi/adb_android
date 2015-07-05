@@ -1,4 +1,4 @@
-adb
+adb_android
 ==========
 
 Enables android adb in your python script.
@@ -9,7 +9,7 @@ Enables android adb in your python script.
 
 ### Purpose
 
-This python package is a wrapper for android adb. It allows you to execute android adb commands in your python script.
+This python package is a wrapper for standard android adb implementation. It allows you to execute android adb commands in your python script.
 
 ### What's supported?
 
