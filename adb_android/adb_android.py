@@ -16,22 +16,15 @@ ADB_COMMAND_DEVICES = 'devices'
 
 def push(src, dest):
     """Pushes files and folders to device."""
-    if (src is not None) and (dest is not None):
-        adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PUSH, src, dest ]
-        return exec_command(adb_full_cmd)
-    else:
-        return False
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PUSH, src, dest ]
+    return exec_command(adb_full_cmd)
 
 def pull(src, dest):
     """Pulls files and folders to device."""
-    if (src is not None) and (dest is not None):
-        adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, src, dest ]
-        return exec_command(adb_full_cmd)
-    else:
-        return False
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, src, dest ]
+    return exec_command(adb_full_cmd)
 
 def devices(opt_l=''):
-    #TODO: add support for all possible options
     """Provides list of available devices"""
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES, opt_l ]
     return exec_command(adb_full_cmd)

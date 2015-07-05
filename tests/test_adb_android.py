@@ -63,16 +63,6 @@ class TestPushCommand(unittest.TestCase):
         result = adb.push(tmp_file.name, DEST_FOLDER_TARGET)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_push_n_invalid_1_parameter(self):
-        global tmp_file
-        result = adb.push(None,DEST_FOLDER_TARGET)
-        self.assertNotEqual(str(result), 0)
-
-    def test_push_n_invalid_2_sparameter(self):
-        global tmp_file
-        result = adb.push(tmp_file.name,None)
-        self.assertNotEqual(str(result), 0)
-
     def test_push_n_invalid_source_folder(self):
         global tmp_file
         result = adb.push(NON_EXISTING_DIR, DEST_FOLDER_TARGET)
@@ -85,16 +75,6 @@ class TestPullCommand(unittest.TestCase):
         global positive_exp_result_wo_output
         result = adb.pull(tmp_file_on_target, dest_folder_host)
         self.assertEqual(result, positive_exp_result_wo_output)
-
-    def test_pull_n_invalid_1_parameter(self):
-        global dest_folder_host
-        result = adb.pull(None, dest_folder_host)
-        self.assertNotEqual(str(result), 0)
-
-    def test_pull_n_invalid_2_parameter(self):
-        global tmp_file_on_target
-        result = adb.pull(tmp_file_on_target, None)
-        self.assertNotEqual(str(result), 0)
 
     def test_pull_n_invalid_dest_folder_host(self):
         global tmp_file_on_target
