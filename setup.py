@@ -11,7 +11,7 @@ test_requirements = [
 ]
 
 setup(
-    name='adb',
+    name='adb_android',
     version='0.1.0',
     description="Enables android adb in your python script",
     long_description='This package can be used by everyone who implements some \
@@ -22,13 +22,20 @@ setup(
     author_email='v.stratus@gmail.com',
     url='https://github.com/vmalyi/adb',
     packages=[
-        'adb',
+        'adb_android',
     ],
-    package_dir={'adb':'adb'},
+    package_dir={'adb_android':'adb_android'},
     include_package_data=True,
     install_requires=requirements,
-    license="BSD",
-    keywords='adb',
-    classifiers=[],
+    license="GNU",
+    keywords='adb, android',
+    #TODO: check compatibitily with >2.7
+    classifiers=[
+    'Development Status :: 4 - Beta',
+    'Programming Language :: Python :: 2.7',
+    'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+    'Topic :: Software Development :: Testing',
+    'Intended Audience :: Developers'
+    ],
     test_suite='tests',
 )

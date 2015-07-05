@@ -1,8 +1,8 @@
 import sys, os, inspect, re, tempfile, unittest
-adb = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],'../adb')))
-if adb not in sys.path:
-    sys.path.insert(0, adb)
-import adb
+adb_android = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],'../adb_android')))
+if adb_android not in sys.path:
+    sys.path.insert(0, adb_android)
+import adb_android as adb
 
 DEST_FOLDER_TARGET = '/data/media/0/'
 NON_EXISTING_DIR = '/non-existing-dir/'
