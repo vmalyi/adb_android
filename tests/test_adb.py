@@ -33,7 +33,7 @@ adb_pull = None
 positive_exp_result_wo_output = 0, ''
 
 def setUpModule():
-    #todo: implement tearDownModule function which will clean generated files
+    #TODO: implement tearDownModule function which will clean generated files
     #from device and host system
     generate_tmp_file()
 
@@ -103,7 +103,7 @@ class TestPullCommand(unittest.TestCase):
 
 class TestDevicesCommand(unittest.TestCase):
     def test_devices_p(self):
-        #todo: return also device ID
+        #TODO: return also device ID
         result = adb.devices()
         #don't check output code in result but presence of "device" string
         self.assertRegexpMatches(result[1], '\\tdevice')
@@ -169,7 +169,7 @@ class TestExecCommand(unittest.TestCase):
         result = adb.exec_command(adb_command)
         self.assertNotEqual(str(result), 0)
 
-        #todo: add negative tests for adb_push/pull where command is misspelled
+        #TODO: add negative tests for adb_push/pull where command is misspelled
         #like global misspelled_adb_push = [ADB_COMMAND_PREFIX, 'pul']
 
 class TestInstallCommand(unittest.TestCase):

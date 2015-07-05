@@ -31,13 +31,13 @@ def pull(src, dest):
         return False
 
 def devices(opt_l=''):
-    #todo: add support for all possible options
+    #TODO: add support for all possible options
     """Provides list of available devices"""
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES, opt_l ]
     return exec_command(adb_full_cmd)
 
 def shell(subcommand):
-    #todo: add support of -s option
+    #TODO: add support of -s option
     """Executes subcommand in adb shell
 
     accepts string as "subcommand" argument
@@ -48,7 +48,7 @@ def shell(subcommand):
     return exec_command(adb_full_cmd)
 
 def install(apk_path, opt_reinstall=''):
-    #todo: add support for all possible options
+    #TODO: add support for all possible options
     """Installs apk on device.
 
     Supported options:
@@ -59,7 +59,7 @@ def install(apk_path, opt_reinstall=''):
     return exec_command(adb_full_cmd)
 
 def uninstall(apk_name):
-    #todo: add support for all possible options
+    #TODO: add support for all possible options
     """Uninstall apk from device.
 
     Supported options:
