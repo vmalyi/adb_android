@@ -46,7 +46,7 @@ python setup.py install
 ```
  2. Import adb to your module and just use it:
 ```
-import adb
+import adb-android as adb
 
 adb.push('/tmp/file.txt', '/data/media/0')
 adb.pull('/data/media/0/file.txt', '/tmp/')
