@@ -154,7 +154,7 @@ class TestExecCommand(unittest.TestCase):
 
 class TestInstallCommand(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUp(self):
         """Deletes *.apk if it already installed"""
         global valid_package_name
         result = adb.shell('pm list packages | grep ' +  valid_package_name)
@@ -172,12 +172,18 @@ class TestInstallCommand(unittest.TestCase):
 
     def test_install_p_reinstall(self):
         global path_to_valid_apk
-        grep_result = adb.shell('pm list packages | grep ' +  valid_package_name)
-        if re.search(exp_install_cmd_output, grep_result[1]):
-            result = adb.install(path_to_valid_apk, '-r')
-        else:
-            self.test_install_p()
-            result = adb.install(path_to_valid_apk, '-r')
+        self.test_install_p()
+        result = adb.install(path_to_valid_apk, '-r')
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_install_p_sdcard(self):
+        global path_to_valid_apk
+        result = adb.install(path_to_valid_apk, '-s')
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_install_p_all_opts(self):
+        global path_to_valid_apk
+        result = adb.install(path_to_valid_apk, '-r', '-s', '-l', '-d', '-t')
         self.assertRegexpMatches(result[1], 'Success')
 
     def test_install_n_invalid_apk(self):

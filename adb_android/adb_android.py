@@ -40,26 +40,29 @@ def shell(subcommand):
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_SHELL, subcommand ]
     return exec_command(adb_full_cmd)
 
-def install(apk_path, opt_reinstall=''):
-    #TODO: add support for all possible options
+def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
     """Installs apk on device.
 
     Supported options:
-    -r: reinstall existing apk
+    -r: replace existing application
+    -s: install application on sdcard
+    -l: forward lock application
+    -d: reinstall existing apk
+    -t: allow test packages
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_INSTALL, opt_reinstall, apk_path ]
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_INSTALL, opt_r, opt_s, \
+    opt_l, opt_d, opt_t, apk ]
     return exec_command(adb_full_cmd)
 
-def uninstall(apk_name):
-    #TODO: add support for all possible options
+def uninstall(apk):
     """Uninstall apk from device.
 
     Supported options:
     none
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk_name ]
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk ]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):
@@ -77,9 +80,10 @@ def exec_command(adb_full_cmd):
             for e in adb_full_cmd:
                 if e != '':
                     final_adb_full_cmd.append(e)
+            print(final_adb_full_cmd)
             output = check_output(final_adb_full_cmd, stderr=t)
             result = 0, output
-            print('*** executing ' + '"' + ' '.join(adb_full_cmd) + '"' \
+            print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \
             + ' command')
         except CalledProcessError as e:
             t.seek(0)
