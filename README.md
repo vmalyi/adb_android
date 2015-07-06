@@ -38,13 +38,13 @@ Currently following adb commands are **not supported**:
 * adb -e
 * adb -s
 
-### How to install and use?
+### How to install?
 
- 1. Execute install command in root folder:
+ 1. Install with help of pip:
 ```
 pip install adb_android
 ```
- 2. Import adb to your module and just use it:
+### How to use?
 ```
 from adb_android import adb_android as adb
 
