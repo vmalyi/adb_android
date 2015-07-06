@@ -5,7 +5,7 @@ Enables android adb in your python script.
 
 ### Build status & coverage status
 
-[![Build Status](https://travis-ci.org/vmalyi/adb.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
+[![Build Status](https://travis-ci.org/vmalyi/adb_android.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
 
 ### Purpose
 
@@ -42,11 +42,11 @@ Currently following adb commands are **not supported**:
 
  1. Execute install command in root folder:
 ```
-python setup.py install
+pip install adb_android
 ```
  2. Import adb to your module and just use it:
 ```
-import adb
+from adb_android import adb_android as adb
 
 adb.push('/tmp/file.txt', '/data/media/0')
 adb.pull('/data/media/0/file.txt', '/tmp/')
