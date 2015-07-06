@@ -40,7 +40,7 @@ Currently following adb commands are **not supported**:
 
 ### How to install?
 
- 1. Install with help of pip:
+Install with help of pip:
 ```
 pip install adb_android
 ```
