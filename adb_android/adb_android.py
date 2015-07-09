@@ -55,14 +55,14 @@ def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
     opt_l, opt_d, opt_t, apk ]
     return exec_command(adb_full_cmd)
 
-def uninstall(apk):
+def uninstall(apk, opt_k=''):
     """Uninstall apk from device.
 
     Supported options:
-    none
+    -k: keep the data and cache directories
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk ]
+    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk, opt_k ]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):
@@ -80,7 +80,6 @@ def exec_command(adb_full_cmd):
             for e in adb_full_cmd:
                 if e != '':
                     final_adb_full_cmd.append(e)
-            print(final_adb_full_cmd)
             output = check_output(final_adb_full_cmd, stderr=t)
             result = 0, output
             print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \

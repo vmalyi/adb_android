@@ -193,7 +193,7 @@ class TestInstallCommand(unittest.TestCase):
 
 class TestUninstallCommand(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUp(self):
         """ Installs apk before test execution """
         global valid_package_name
         global path_to_valid_apk
@@ -208,6 +208,11 @@ class TestUninstallCommand(unittest.TestCase):
     def test_uninstall_p(self):
         global valid_package_name
         result = adb.uninstall(valid_package_name)
+        self.assertRegexpMatches(result[1], 'Success')
+
+    def test_uninstall_keep_data(self):
+        global valid_package_name
+        result = adb.uninstall(valid_package_name, '-k')
         self.assertRegexpMatches(result[1], 'Success')
 
     def test_uninstall_n_invalid_package_name(self):
