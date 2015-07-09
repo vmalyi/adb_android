@@ -1,15 +1,15 @@
-adb
+adb_android
 ==========
 
 Enables android adb in your python script.
 
 ### Build status & coverage status
 
-[![Build Status](https://travis-ci.org/vmalyi/adb.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
+[![Build Status](https://travis-ci.org/vmalyi/adb_android.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
 
 ### Purpose
 
-This python package is a wrapper for android adb. It allows you to execute android adb commands in your python script.
+This python package is a wrapper for standard android adb implementation. It allows you to execute android adb commands in your python script.
 
 ### What's supported?
 
@@ -38,15 +38,15 @@ Currently following adb commands are **not supported**:
 * adb -e
 * adb -s
 
-### How to install and use?
+### How to install?
 
- 1. Execute install command in root folder:
+Install with help of pip:
 ```
-python setup.py install
+pip install adb_android
 ```
- 2. Import adb to your module and just use it:
+### How to use?
 ```
-import adb-android as adb
+from adb_android import adb_android as adb
 
 adb.push('/tmp/file.txt', '/data/media/0')
 adb.pull('/data/media/0/file.txt', '/tmp/')
