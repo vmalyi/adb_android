@@ -30,7 +30,6 @@ def devices(opt_l=''):
     return exec_command(adb_full_cmd)
 
 def shell(subcommand):
-    #TODO: add support of -s option
     """Executes subcommand in adb shell
 
     accepts string as "subcommand" argument

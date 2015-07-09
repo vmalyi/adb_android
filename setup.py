@@ -28,7 +28,6 @@ setup(
     install_requires=requirements,
     license="GNU",
     keywords='adb, android',
-    #TODO: check compatibitily with >2.7
     classifiers=[
     'Development Status :: 4 - Beta',
     'Programming Language :: Python :: 2.7',
