@@ -10,9 +10,9 @@ before_script:
   - adb shell input keyevent 82 &
 install:
   #install adb library
-  - sudo pip install -e .
+  - sudo pip install adb_android
 script:
   - adb shell ls /data/media/0
-  - python test/adb_test.py
+  - python tests/test_adb_android.py
 notifications:
     email: false
