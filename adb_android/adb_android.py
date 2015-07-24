@@ -80,7 +80,7 @@ def exec_command(adb_full_cmd):
                 if e != '':
                     final_adb_full_cmd.append(e)
             output = check_output(final_adb_full_cmd, stderr=t)
-            result = 0, output
+            result = 0, output.rstrip()
             print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \
             + ' command')
         except CalledProcessError as e:
