@@ -12,7 +12,6 @@ install:
   #install adb library
   - sudo pip install adb_android
 script:
-  - adb shell ls /data/media/0
-  - python tests/test_adb_android.py
+  - python -m unittest discover
 notifications:
     email: false

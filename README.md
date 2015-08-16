@@ -20,11 +20,11 @@ Currently following adb commands are **supported**:
 * adb devices
 * adb install
 * adb uninstall
+* adb get-serialno
 
 Currently following adb commands are **not supported**:
 
 * adb forward
-* adb get-serialno
 * adb get-state
 * adb wait-for-device
 * adb start-server
