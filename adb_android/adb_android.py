@@ -13,6 +13,7 @@ ADB_COMMAND_INSTALL = 'install'
 ADB_COMMAND_UNINSTALL = 'uninstall'
 ADB_COMMAND_FORWARD = 'forward'
 ADB_COMMAND_DEVICES = 'devices'
+ADB_COMMAND_GETSERIALNO = 'get-serialno'
 
 def push(src, dest):
     """Pushes files and folders to device."""
@@ -42,12 +43,12 @@ def shell(subcommand):
 def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
     """Installs apk on device.
 
-    Supported options:
-    -r: replace existing application
-    -s: install application on sdcard
-    -l: forward lock application
-    -d: reinstall existing apk
-    -t: allow test packages
+    options:
+        -r: replace existing application
+        -s: install application on sdcard
+        -l: forward lock application
+        -d: reinstall existing apk
+        -t: allow test packages
 
     """
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_INSTALL, opt_r, opt_s, \
@@ -55,13 +56,26 @@ def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
     return exec_command(adb_full_cmd)
 
 def uninstall(apk, opt_k=''):
-    """Uninstall apk from device.
+    """Uninstalls apk from device.
 
-    Supported options:
-    -k: keep the data and cache directories
+    options:
+        -k: keep the data and cache directories
 
     """
     adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk, opt_k ]
+    return exec_command(adb_full_cmd)
+
+def getserialno():
+    '''Gets serial number for all online devices
+
+    args:
+        n/a
+
+    returns:
+        device serial number as string
+
+    '''
+    adb_full_cmd = [ADB_COMMAND_PREFIX, ADB_COMMAND_GETSERIALNO]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):
@@ -79,10 +93,10 @@ def exec_command(adb_full_cmd):
             for e in adb_full_cmd:
                 if e != '':
                     final_adb_full_cmd.append(e)
+            print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \
+            + 'command')
             output = check_output(final_adb_full_cmd, stderr=t)
             result = 0, output
-            print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \
-            + ' command')
         except CalledProcessError as e:
             t.seek(0)
             result = e.returncode, t.read()

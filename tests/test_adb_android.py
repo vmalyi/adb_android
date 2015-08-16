@@ -214,5 +214,10 @@ class TestUninstallCommand(unittest.TestCase):
         result = adb.uninstall(invalid_package_name)
         self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
+class TestGetSerialNoCommand(unittest.TestCase):
+    def test_getserialno_p(self):
+        result = adb.getserialno()
+        self.assertNotRegexpMatches(result[1], 'unknown')
+
 if __name__ == '__main__':
     unittest.main()
