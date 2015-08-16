@@ -54,6 +54,15 @@ def generate_tmp_file():
     dest_folder_host = os.path.dirname(tmp_file.name)
     print('*** getting path to dest_folder_host ' + dest_folder_host)
 
+def is_emulator():
+    result = adb.getserialno()
+    if re.search('emulator.*', result[1]):
+        print('True')
+        return True
+    else:
+        print('False')
+        return False
+
 class TestPushCommand(unittest.TestCase):
     def test_push_p(self):
         global tmp_file
@@ -170,11 +179,13 @@ class TestInstallCommand(unittest.TestCase):
         result = adb.install(path_to_valid_apk, '-r')
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_p_sdcard(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk, '-s')
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_p_all_opts(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk, '-r', '-s', '-l', '-d', '-t')
