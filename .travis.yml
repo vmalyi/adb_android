@@ -10,8 +10,9 @@ before_script:
   - adb shell input keyevent 82 &
 install:
   #install adb library
-  - sudo pip install adb_android
+  - pip install adb_android
 script:
   - python -m unittest discover
 notifications:
     email: false
+sudo: false #adaptation to travis's container infrastructure
