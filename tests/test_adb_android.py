@@ -168,11 +168,13 @@ class TestInstallCommand(unittest.TestCase):
             print('*** no need to uninstall ' + valid_package_name + ' since\
             it is not yet installed')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_p(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk)
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_p_reinstall(self):
         global path_to_valid_apk
         self.test_install_p()
@@ -191,6 +193,7 @@ class TestInstallCommand(unittest.TestCase):
         result = adb.install(path_to_valid_apk, '-r', '-s', '-l', '-d', '-t')
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_n_invalid_apk(self):
         global path_to_invalid_apk
         result = adb.install(path_to_invalid_apk)
@@ -210,16 +213,19 @@ class TestUninstallCommand(unittest.TestCase):
             print('*** no need to install ' + valid_package_name + ' since it is\
             already installed')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_p(self):
         global valid_package_name
         result = adb.uninstall(valid_package_name)
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_keep_data(self):
         global valid_package_name
         result = adb.uninstall(valid_package_name, '-k')
         self.assertRegexpMatches(result[1], 'Success')
 
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_n_invalid_package_name(self):
         global invalid_package_name
         result = adb.uninstall(invalid_package_name)
