@@ -64,52 +64,52 @@ def is_emulator():
         return False
 
 class TestPush(unittest.TestCase):
-    def test_push_p(self):
+    def test_push(self):
         global tmp_file
         global positive_exp_result_wo_output
         result = adb.push(tmp_file.name, DEST_FOLDER_TARGET)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_push_n_invalid_source_folder(self):
+    def test_push_invalid_source_folder(self):
         global tmp_file
         result = adb.push(NON_EXISTING_DIR, DEST_FOLDER_TARGET)
         self.assertNotEqual(str(result), 0)
 
 class TestPull(unittest.TestCase):
-    def test_pull_p(self):
+    def test_pull(self):
         global tmp_file_on_target
         global dest_folder_host
         global positive_exp_result_wo_output
         result = adb.pull(tmp_file_on_target, dest_folder_host)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_pull_n_invalid_dest_folder_host(self):
+    def test_pull_invalid_dest_folder_host(self):
         global tmp_file_on_target
         result = adb.pull(tmp_file_on_target, NON_EXISTING_DIR)
         self.assertNotEqual(str(result), 0)
 
 class TestDevices(unittest.TestCase):
-    def test_devices_p(self):
+    def test_devices(self):
         result = adb.devices()
         #don't check output code in result but presence of "device" string
         self.assertRegexpMatches(result[1], '\\tdevice')
 
-    def test_devices_p_l_option(self):
+    def test_devices_l_option(self):
         result = adb.devices('-l')
         self.assertRegexpMatches(result[1], 'model:')
 
 class TestShell(unittest.TestCase):
-    def test_shell_p(self):
+    def test_shell(self):
         result = adb.shell('ls')
         #search for folders which will be for sure on Adnroid OS
         self.assertRegexpMatches(result[1], '(\\r\\nroot|\\r\\nsys|\\r\\nsystem)')
 
-    def test_shell_p_w_option(self):
+    def test_shell_w_option(self):
         result = adb.shell('ls -l')
         #search for time attribute which is for sure present in "-l" option
         self.assertRegexpMatches(result[1], '[0-2][0-9]:[0-5][0-9]')
 
-    def test_shell_n_misspelled(self):
+    def test_shell_misspelled(self):
         result = adb.shell('misspelled')
         self.assertRegexpMatches(result[1], 'not found')
 
@@ -130,26 +130,26 @@ class TestExec(unittest.TestCase):
         adb_pull = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target, \
         dest_folder_host ]
 
-    def test_exec_p_adb_push(self):
+    def test_exec_adb_push(self):
         global adb_push
         global positive_exp_result_wo_output
         result = adb.exec_command(adb_push)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_p_adb_pull(self):
+    def test_exec_adb_pull(self):
         global adb_pull
         global positive_exp_result_wo_output
         result = adb.exec_command(adb_pull)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_p_uncomplete_argument(self):
+    def test_exec_incomplete_argument(self):
         #4th argument is missing in adb_command
         global positive_exp_result_wo_output
         adb_command = [ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target]
         result = adb.exec_command(adb_command)
         self.assertEqual(result, positive_exp_result_wo_output)
 
-    def test_exec_n_missing_argument(self):
+    def test_exec_missing_argument(self):
         #no argument at all
         adb_command = None
         result = adb.exec_command(adb_command)
@@ -169,32 +169,32 @@ class TestInstall(unittest.TestCase):
             it is not yet installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_install_p(self):
+    def test_install(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk)
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_install_p_reinstall(self):
+    def test_install_reinstall(self):
         global path_to_valid_apk
         self.test_install_p()
         result = adb.install(path_to_valid_apk, '-r')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_install_p_sdcard(self):
+    def test_install_sdcard(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk, '-s')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_install_p_all_opts(self):
+    def test_install_all_opts(self):
         global path_to_valid_apk
         result = adb.install(path_to_valid_apk, '-r', '-s', '-l', '-d', '-t')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_install_n_invalid_apk(self):
+    def test_install_invalid_apk(self):
         global path_to_invalid_apk
         result = adb.install(path_to_invalid_apk)
         self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
@@ -216,7 +216,7 @@ class TestUninstall(unittest.TestCase):
             already installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_uninstall_p(self):
+    def test_uninstall(self):
         global valid_package_name
         result = adb.uninstall(valid_package_name)
         self.assertRegexpMatches(result[1], 'Success')
@@ -228,13 +228,13 @@ class TestUninstall(unittest.TestCase):
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_uninstall_n_invalid_package_name(self):
+    def test_uninstall_invalid_package_name(self):
         global invalid_package_name
         result = adb.uninstall(invalid_package_name)
         self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
 class TestGetSerialNumber(unittest.TestCase):
-    def test_getserialno_p(self):
+    def test_getserialno(self):
         result = adb.getserialno()
         self.assertNotRegexpMatches(result[1], 'unknown')
 
