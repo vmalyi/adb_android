@@ -63,7 +63,7 @@ def is_emulator():
         print('False')
         return False
 
-class TestPushCommand(unittest.TestCase):
+class TestPush(unittest.TestCase):
     def test_push_p(self):
         global tmp_file
         global positive_exp_result_wo_output
@@ -75,7 +75,7 @@ class TestPushCommand(unittest.TestCase):
         result = adb.push(NON_EXISTING_DIR, DEST_FOLDER_TARGET)
         self.assertNotEqual(str(result), 0)
 
-class TestPullCommand(unittest.TestCase):
+class TestPull(unittest.TestCase):
     def test_pull_p(self):
         global tmp_file_on_target
         global dest_folder_host
@@ -88,7 +88,7 @@ class TestPullCommand(unittest.TestCase):
         result = adb.pull(tmp_file_on_target, NON_EXISTING_DIR)
         self.assertNotEqual(str(result), 0)
 
-class TestDevicesCommand(unittest.TestCase):
+class TestDevices(unittest.TestCase):
     def test_devices_p(self):
         result = adb.devices()
         #don't check output code in result but presence of "device" string
@@ -98,7 +98,7 @@ class TestDevicesCommand(unittest.TestCase):
         result = adb.devices('-l')
         self.assertRegexpMatches(result[1], 'model:')
 
-class TestShellCommand(unittest.TestCase):
+class TestShell(unittest.TestCase):
     def test_shell_p(self):
         result = adb.shell('ls')
         #search for folders which will be for sure on Adnroid OS
@@ -113,7 +113,7 @@ class TestShellCommand(unittest.TestCase):
         result = adb.shell('misspelled')
         self.assertRegexpMatches(result[1], 'not found')
 
-class TestExecCommand(unittest.TestCase):
+class TestExec(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         """Prepares full adb commands for tests"""
@@ -155,7 +155,7 @@ class TestExecCommand(unittest.TestCase):
         result = adb.exec_command(adb_command)
         self.assertNotEqual(str(result), 0)
 
-class TestInstallCommand(unittest.TestCase):
+class TestInstall(unittest.TestCase):
     @classmethod
     def setUp(self):
         """Deletes *.apk if it already installed"""
@@ -199,13 +199,15 @@ class TestInstallCommand(unittest.TestCase):
         result = adb.install(path_to_invalid_apk)
         self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
 
-class TestUninstallCommand(unittest.TestCase):
+class TestUninstall(unittest.TestCase):
     @classmethod
     def setUp(self):
         """ Installs apk before test execution """
         global valid_package_name
         global path_to_valid_apk
+
         result = adb.shell('pm list packages | grep ' +  valid_package_name)
+
         if not re.search(exp_install_cmd_output, result[1]):
             print('*** installing ' + valid_package_name)
             adb.install(path_to_valid_apk)
@@ -231,7 +233,7 @@ class TestUninstallCommand(unittest.TestCase):
         result = adb.uninstall(invalid_package_name)
         self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
-class TestGetSerialNoCommand(unittest.TestCase):
+class TestGetSerialNumber(unittest.TestCase):
     def test_getserialno_p(self):
         result = adb.getserialno()
         self.assertNotRegexpMatches(result[1], 'unknown')
