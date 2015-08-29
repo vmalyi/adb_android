@@ -57,11 +57,16 @@ def generate_tmp_file():
 def is_emulator():
     result = adb.getserialno()
     if re.search('emulator.*', result[1]):
-        print('True')
         return True
     else:
-        print('False')
         return False
+
+def is_device_available():
+    result = adb.getserialno()
+    if re.search('unknown', result[1]):
+        return False
+    else:
+        return True
 
 class TestPush(unittest.TestCase):
     def test_push(self):
@@ -237,6 +242,14 @@ class TestGetSerialNumber(unittest.TestCase):
     def test_getserialno(self):
         result = adb.getserialno()
         self.assertNotRegexpMatches(result[1], 'unknown')
+
+class TestWaitForDevice(unittest.TestCase):
+    #device should be available, otherwise test runs forever
+    @unittest.skipUnless(is_device_available(), 'device not available')
+    def test_wait_for_device(self):
+        global positive_exp_result_wo_output
+        result = adb.wait_for_device()
+        self.assertEqual(result, positive_exp_result_wo_output)
 
 if __name__ == '__main__':
     unittest.main()

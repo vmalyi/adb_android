@@ -14,6 +14,7 @@ ADB_COMMAND_UNINSTALL = 'uninstall'
 ADB_COMMAND_FORWARD = 'forward'
 ADB_COMMAND_DEVICES = 'devices'
 ADB_COMMAND_GETSERIALNO = 'get-serialno'
+ADB_COMMAND_WAITFORDEVICE = 'wait-for-device'
 
 def push(src, dest):
     """Pushes files and folders to device."""
@@ -72,10 +73,22 @@ def getserialno():
         n/a
 
     returns:
-        device serial number as string
+        String device serial number
 
     '''
     adb_full_cmd = [ADB_COMMAND_PREFIX, ADB_COMMAND_GETSERIALNO]
+    return exec_command(adb_full_cmd)
+
+def wait_for_device():
+    '''Waits until device is online
+
+    args:
+        n/a
+
+    returns:
+        True as soon as device available. Otherwise False
+    '''
+    adb_full_cmd = [ADB_COMMAND_PREFIX, ADB_COMMAND_WAITFORDEVICE]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):
