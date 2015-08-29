@@ -3,34 +3,25 @@ adb_android = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspec
 if adb_android not in sys.path:
     sys.path.insert(0, adb_android)
 import adb_android as adb
+import var as v
 
 DEST_FOLDER_TARGET = '/data/media/0/'
 NON_EXISTING_DIR = '/non-existing-dir/'
-dest_folder_host = ''
+PATH_TO_VALID_APK = 'files/valid.apk'
+PATH_TO_INVALID_APK = 'files/invalid.apk'
+VALID_PACKAGE_NAME = 'com.example.android.valid'
+INVALID_PACKAGE_NAME = 'com.non-existing-app'
 
-ADB_COMMAND_PREFIX = 'adb'
-ADB_COMMAND_SHELL = 'shell'
-ADB_COMMAND_PULL = 'pull'
-ADB_COMMAND_PUSH = 'push'
-ADB_COMMAND_RM = 'rm -r'
-ADB_COMMAND_CHMOD = 'chmod -R 777'
-ADB_COMMAND_UNINSTALL = 'uninstall'
-ADB_COMMAND_INSTALL = 'install'
-ADB_COMMAND_FORWARD = 'forward'
+exp_install_cmd_output = re.compile(('package:' + VALID_PACKAGE_NAME))
 
 tmp_file = None
 tmp_file_on_target = None
-
-path_to_valid_apk = 'files/valid.apk'
-valid_package_name = 'com.example.android.valid'
-path_to_invalid_apk = 'files/invalid.apk'
-invalid_package_name = 'com.non-existing-app'
-exp_install_cmd_output = re.compile(('package:' + valid_package_name))
+dest_folder_host = ''
 
 adb_push = None
 adb_pull = None
 
-positive_exp_result_wo_output = 0, ''
+POSITIVE_EXP_RESULT_WO_OUTPUT = 0, ''
 
 def setUpModule():
     generate_tmp_file()
@@ -71,9 +62,9 @@ def is_device_available():
 class TestPush(unittest.TestCase):
     def test_push(self):
         global tmp_file
-        global positive_exp_result_wo_output
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.push(tmp_file.name, DEST_FOLDER_TARGET)
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     def test_push_invalid_source_folder(self):
         global tmp_file
@@ -84,9 +75,9 @@ class TestPull(unittest.TestCase):
     def test_pull(self):
         global tmp_file_on_target
         global dest_folder_host
-        global positive_exp_result_wo_output
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.pull(tmp_file_on_target, dest_folder_host)
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     def test_pull_invalid_dest_folder_host(self):
         global tmp_file_on_target
@@ -125,34 +116,34 @@ class TestExec(unittest.TestCase):
         #assembles "adb push" command
         global tmp_file
         global adb_push
-        adb_push = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PUSH, tmp_file.name, \
+        adb_push = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PUSH, tmp_file.name, \
         DEST_FOLDER_TARGET ]
 
         #assembles "adb pull" command
         global tmp_file_on_target
         global dest_folder_host
         global adb_pull
-        adb_pull = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target, \
+        adb_pull = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PULL, tmp_file_on_target, \
         dest_folder_host ]
 
     def test_exec_adb_push(self):
         global adb_push
-        global positive_exp_result_wo_output
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.exec_command(adb_push)
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     def test_exec_adb_pull(self):
         global adb_pull
-        global positive_exp_result_wo_output
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.exec_command(adb_pull)
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     def test_exec_incomplete_argument(self):
         #4th argument is missing in adb_command
-        global positive_exp_result_wo_output
-        adb_command = [ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, tmp_file_on_target]
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
+        adb_command = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PULL, tmp_file_on_target]
         result = adb.exec_command(adb_command)
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     def test_exec_missing_argument(self):
         #no argument at all
@@ -164,78 +155,78 @@ class TestInstall(unittest.TestCase):
     @classmethod
     def setUp(self):
         """Deletes *.apk if it already installed"""
-        global valid_package_name
-        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        global VALID_PACKAGE_NAME
+        result = adb.shell('pm list packages | grep ' +  VALID_PACKAGE_NAME)
         if re.search(exp_install_cmd_output, result[1]):
-            print('*** uninstalling existing ' + valid_package_name)
-            adb.uninstall(valid_package_name)
+            print('*** uninstalling existing ' + VALID_PACKAGE_NAME)
+            adb.uninstall(VALID_PACKAGE_NAME)
         else:
-            print('*** no need to uninstall ' + valid_package_name + ' since\
+            print('*** no need to uninstall ' + VALID_PACKAGE_NAME + ' since\
             it is not yet installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install(self):
-        global path_to_valid_apk
-        result = adb.install(path_to_valid_apk)
+        global PATH_TO_VALID_APK
+        result = adb.install(PATH_TO_VALID_APK)
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_reinstall(self):
-        global path_to_valid_apk
+        global PATH_TO_VALID_APK
         self.test_install_p()
-        result = adb.install(path_to_valid_apk, '-r')
+        result = adb.install(PATH_TO_VALID_APK, '-r')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_sdcard(self):
-        global path_to_valid_apk
-        result = adb.install(path_to_valid_apk, '-s')
+        global PATH_TO_VALID_APK
+        result = adb.install(PATH_TO_VALID_APK, '-s')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_all_opts(self):
-        global path_to_valid_apk
-        result = adb.install(path_to_valid_apk, '-r', '-s', '-l', '-d', '-t')
+        global PATH_TO_VALID_APK
+        result = adb.install(PATH_TO_VALID_APK, '-r', '-s', '-l', '-d', '-t')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_invalid_apk(self):
-        global path_to_invalid_apk
-        result = adb.install(path_to_invalid_apk)
+        global PATH_TO_INVALID_APK
+        result = adb.install(PATH_TO_INVALID_APK)
         self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
 
 class TestUninstall(unittest.TestCase):
     @classmethod
     def setUp(self):
         """ Installs apk before test execution """
-        global valid_package_name
-        global path_to_valid_apk
+        global VALID_PACKAGE_NAME
+        global PATH_TO_VALID_APK
 
-        result = adb.shell('pm list packages | grep ' +  valid_package_name)
+        result = adb.shell('pm list packages | grep ' +  VALID_PACKAGE_NAME)
 
         if not re.search(exp_install_cmd_output, result[1]):
-            print('*** installing ' + valid_package_name)
-            adb.install(path_to_valid_apk)
+            print('*** installing ' + VALID_PACKAGE_NAME)
+            adb.install(PATH_TO_VALID_APK)
         else:
-            print('*** no need to install ' + valid_package_name + ' since it is\
+            print('*** no need to install ' + VALID_PACKAGE_NAME + ' since it is\
             already installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall(self):
-        global valid_package_name
-        result = adb.uninstall(valid_package_name)
+        global VALID_PACKAGE_NAME
+        result = adb.uninstall(VALID_PACKAGE_NAME)
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_keep_data(self):
-        global valid_package_name
-        result = adb.uninstall(valid_package_name, '-k')
+        global VALID_PACKAGE_NAME
+        result = adb.uninstall(VALID_PACKAGE_NAME, '-k')
         self.assertRegexpMatches(result[1], 'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_invalid_package_name(self):
-        global invalid_package_name
-        result = adb.uninstall(invalid_package_name)
+        global INVALID_PACKAGE_NAME
+        result = adb.uninstall(INVALID_PACKAGE_NAME)
         self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
 
 class TestGetSerialNumber(unittest.TestCase):
@@ -247,9 +238,9 @@ class TestWaitForDevice(unittest.TestCase):
     #device should be available, otherwise test runs forever
     @unittest.skipUnless(is_device_available(), 'device not available')
     def test_wait_for_device(self):
-        global positive_exp_result_wo_output
+        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.wait_for_device()
-        self.assertEqual(result, positive_exp_result_wo_output)
+        self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
 if __name__ == '__main__':
     unittest.main()

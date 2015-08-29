@@ -1,34 +1,21 @@
 import os
 import tempfile
+import var as v
 from subprocess import check_output, CalledProcessError
-
-ADB_COMMAND_PREFIX = 'adb'
-ADB_COMMAND_SHELL = 'shell'
-ADB_COMMAND_PULL = 'pull'
-ADB_COMMAND_PUSH = 'push'
-ADB_COMMAND_RM = 'rm -r'
-ADB_COMMAND_CHMOD = 'chmod -R 777'
-ADB_COMMAND_UNINSTALL = 'uninstall'
-ADB_COMMAND_INSTALL = 'install'
-ADB_COMMAND_UNINSTALL = 'uninstall'
-ADB_COMMAND_FORWARD = 'forward'
-ADB_COMMAND_DEVICES = 'devices'
-ADB_COMMAND_GETSERIALNO = 'get-serialno'
-ADB_COMMAND_WAITFORDEVICE = 'wait-for-device'
 
 def push(src, dest):
     """Pushes files and folders to device."""
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PUSH, src, dest ]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PUSH, src, dest ]
     return exec_command(adb_full_cmd)
 
 def pull(src, dest):
     """Pulls files and folders to device."""
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_PULL, src, dest ]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PULL, src, dest ]
     return exec_command(adb_full_cmd)
 
 def devices(opt_l=''):
     """Provides list of available devices"""
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_DEVICES, opt_l ]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_DEVICES, opt_l ]
     return exec_command(adb_full_cmd)
 
 def shell(subcommand):
@@ -38,7 +25,7 @@ def shell(subcommand):
     example: "adb shell cat filename.txt"
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_SHELL, subcommand ]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_SHELL, subcommand ]
     return exec_command(adb_full_cmd)
 
 def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
@@ -52,7 +39,7 @@ def install(apk, opt_r='', opt_s='', opt_l='', opt_d='', opt_t=''):
         -t: allow test packages
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_INSTALL, opt_r, opt_s, \
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_INSTALL, opt_r, opt_s, \
     opt_l, opt_d, opt_t, apk ]
     return exec_command(adb_full_cmd)
 
@@ -63,7 +50,7 @@ def uninstall(apk, opt_k=''):
         -k: keep the data and cache directories
 
     """
-    adb_full_cmd = [ ADB_COMMAND_PREFIX, ADB_COMMAND_UNINSTALL, apk, opt_k ]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_UNINSTALL, apk, opt_k ]
     return exec_command(adb_full_cmd)
 
 def getserialno():
@@ -76,7 +63,7 @@ def getserialno():
         String device serial number
 
     '''
-    adb_full_cmd = [ADB_COMMAND_PREFIX, ADB_COMMAND_GETSERIALNO]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GETSERIALNO ]
     return exec_command(adb_full_cmd)
 
 def wait_for_device():
@@ -88,7 +75,7 @@ def wait_for_device():
     returns:
         True as soon as device available. Otherwise False
     '''
-    adb_full_cmd = [ADB_COMMAND_PREFIX, ADB_COMMAND_WAITFORDEVICE]
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_WAITFORDEVICE ]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):
