@@ -46,7 +46,7 @@ pip install adb_android
 ```
 ### How to use?
 ```
-import adb_android
+from adb_android import adb_android
 
 adb_android.push('/tmp/file.txt', '/data/media/0')
 adb_android.pull('/data/media/0/file.txt', '/tmp/')
