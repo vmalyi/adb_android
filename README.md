@@ -3,9 +3,10 @@ adb_android
 
 Enables android adb in your python script.
 
-### Build status & coverage status
+### Project status
 
 [![Build Status](https://travis-ci.org/vmalyi/adb_android.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
+[![Analytics](https://ga-beacon.appspot.com/UA-70264103-1/vmalyi/adb_android)](https://github.com/vmalyi/adb_android)
 
 ### Purpose
 
