@@ -78,6 +78,30 @@ def wait_for_device():
     adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_WAITFORDEVICE ]
     return exec_command(adb_full_cmd)
 
+def start_server():
+    '''Start adb server daemon
+
+    args:
+        n/a
+
+    returns:
+        True if daemon has been successfully started
+    '''
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_START_SERVER ]
+    return exec_command(adb_full_cmd)
+
+def kill_server():
+    '''Stops adb server daemon
+
+    args:
+        n/a
+
+    returns:
+        True if daemon has been successfully stopped
+    '''
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_KILL_SERVER ]
+    return exec_command(adb_full_cmd)
+
 def exec_command(adb_full_cmd):
     """Executes adb command and handles result code.
 

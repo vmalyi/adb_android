@@ -22,6 +22,7 @@ adb_push = None
 adb_pull = None
 
 POSITIVE_EXP_RESULT_WO_OUTPUT = 0, ''
+POSITIVE_EXP_RESULT = 0
 
 def setUpModule():
     generate_tmp_file()
@@ -241,6 +242,16 @@ class TestWaitForDevice(unittest.TestCase):
         global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.wait_for_device()
         self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
+
+class TestKillServer(unittest.TestCase):
+    def test_kill_server(self):
+        result = adb.kill_server()
+        self.assertEqual(result[0], POSITIVE_EXP_RESULT)
+
+class TestStartServer(unittest.TestCase):
+    def test_start_server(self):
+        result = adb.start_server()
+        self.assertEqual(result[0], POSITIVE_EXP_RESULT)
 
 if __name__ == '__main__':
     unittest.main()
