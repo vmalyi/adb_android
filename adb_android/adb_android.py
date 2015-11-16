@@ -117,14 +117,14 @@ def exec_command(adb_full_cmd):
             for e in adb_full_cmd:
                 if e != '':
                     final_adb_full_cmd.append(e)
-            print('*** executing ' + ' '.join(adb_full_cmd) + ' ' \
+            print('\n*** executing ' + ' '.join(adb_full_cmd) + ' ' \
             + 'command')
             output = check_output(final_adb_full_cmd, stderr=t)
             result = 0, output
         except CalledProcessError as e:
             t.seek(0)
             result = e.returncode, t.read()
-        print(result[1])
+        print('\n' + result[1])
         return result
     else:
         return False
