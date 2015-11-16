@@ -23,12 +23,12 @@ Currently following adb commands are **supported**:
 * adb get-serialno
 * adb start-server
 * adb kill-server
+* adb get-state
 
 Currently following adb commands are **not supported**:
 
 * adb sync
 * adb forward
-* adb get-state
 * adb wait-for-device
 * adb logcat
 * adb bugreport

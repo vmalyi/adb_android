@@ -73,7 +73,7 @@ def wait_for_device():
         n/a
 
     returns:
-        True as soon as device available. Otherwise False
+        0 if command has been executed successfully.
     '''
     adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_WAITFORDEVICE ]
     return exec_command(adb_full_cmd)
@@ -85,7 +85,7 @@ def start_server():
         n/a
 
     returns:
-        True if daemon has been successfully started
+        0 if command has been executed successfully.
     '''
     adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_START_SERVER ]
     return exec_command(adb_full_cmd)
@@ -97,9 +97,21 @@ def kill_server():
         n/a
 
     returns:
-        True if daemon has been successfully stopped
+        0 if command has been executed successfully.
     '''
     adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_KILL_SERVER ]
+    return exec_command(adb_full_cmd)
+
+def get_state():
+    '''Gets current state of device connected per adb
+
+    args:
+        n/a
+
+    returns:
+        0 if command has been executed successfully.
+    '''
+    adb_full_cmd = [ v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GET_STATE ]
     return exec_command(adb_full_cmd)
 
 def exec_command(adb_full_cmd):

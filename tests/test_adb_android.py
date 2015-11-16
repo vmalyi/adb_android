@@ -254,5 +254,10 @@ class TestStartServer(unittest.TestCase):
         result = adb.start_server()
         self.assertEqual(result[0], POSITIVE_EXP_RESULT)
 
+class TestGetState(unittest.TestCase):
+    def test_get_state(self):
+        result = adb.get_state()
+        self.assertEqual(result[1], 'device\n')
+
 if __name__ == '__main__':
     unittest.main()
