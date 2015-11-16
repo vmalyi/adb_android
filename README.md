@@ -21,14 +21,14 @@ Currently following adb commands are **supported**:
 * adb install
 * adb uninstall
 * adb get-serialno
+* adb start-server
+* adb kill-server
 
 Currently following adb commands are **not supported**:
 
 * adb forward
 * adb get-state
 * adb wait-for-device
-* adb start-server
-* adb kill-server
 * adb logcat
 * adb bugreport
 * adb jdwp
@@ -54,7 +54,7 @@ adb_android.shell('ls')
 adb_android.devices()
 adb_android.install('/usr/local/app.apk')
 adb_android.uninstall('com.example.android.valid')
-adb_android.getserialno() 
+adb_android.getserialno()
 
 ...
 ```
