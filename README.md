@@ -26,6 +26,7 @@ Currently following adb commands are **supported**:
 
 Currently following adb commands are **not supported**:
 
+* adb sync
 * adb forward
 * adb get-state
 * adb wait-for-device
