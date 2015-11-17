@@ -6,7 +6,7 @@ Enables android adb in your python script.
 ### Project status
 
 [![Build Status](https://travis-ci.org/vmalyi/adb_android.svg?branch=master)](https://travis-ci.org/vmalyi/adb_android)
-[![Analytics](https://ga-beacon.appspot.com/UA-70264103-1/vmalyi/adb_android/Readme)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-70264103-1/vmalyi/adb_android/README)](https://github.com/igrigorik/ga-beacon)
 
 ### Purpose
 
