@@ -105,14 +105,10 @@ def kill_server():
 
 
 def get_state():
-    '''Gets current state of device connected per adb
-
-    args:
-        n/a
-
-    returns:
-        0 if command has been executed successfully.
-    '''
+    """
+    Get state of device connected per adb
+    :return: result of exec_command() execution
+    """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GET_STATE]
     return exec_command(adb_full_cmd)
 

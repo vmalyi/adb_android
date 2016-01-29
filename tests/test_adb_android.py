@@ -295,7 +295,7 @@ class TestStartServer(unittest.TestCase):
 class TestGetState(unittest.TestCase):
     def test_get_state(self):
         result = adb.get_state()
-        self.assertEqual(result[1], 'device\n')
+        result[1].should.match(r'device\r\n')
 
 
 if __name__ == '__main__':
