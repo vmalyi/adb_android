@@ -71,21 +71,17 @@ def uninstall(app, opts=[]):
 def getserialno():
     """
     Get serial number for all available target devices
-    :return: string serial number
+    :return: result of exec_command() execution
     """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GETSERIALNO]
     return exec_command(adb_full_cmd)
 
 
 def wait_for_device():
-    '''Waits until device is online
-
-    args:
-        n/a
-
-    returns:
-        0 if command has been executed successfully.
-    '''
+    """
+    Block execution until the device is online
+    :return: result of exec_command() execution
+    """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_WAITFORDEVICE]
     return exec_command(adb_full_cmd)
 

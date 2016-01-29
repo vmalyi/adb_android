@@ -276,7 +276,6 @@ class TestWaitForDevice(unittest.TestCase):
     # device should be available, otherwise test runs forever
     @unittest.skipUnless(is_device_available(), 'device not available')
     def test_wait_for_device(self):
-        global POSITIVE_EXP_RESULT_WO_OUTPUT
         result = adb.wait_for_device()
         self.assertEqual(result, POSITIVE_EXP_RESULT_WO_OUTPUT)
 
