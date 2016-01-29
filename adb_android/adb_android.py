@@ -69,15 +69,10 @@ def uninstall(app, opts=[]):
 
 
 def getserialno():
-    '''Gets serial number for all online devices
-
-    args:
-        n/a
-
-    returns:
-        String device serial number
-
-    '''
+    """
+    Get serial number for all available target devices
+    :return: string serial number
+    """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GETSERIALNO]
     return exec_command(adb_full_cmd)
 
