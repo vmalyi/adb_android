@@ -284,7 +284,6 @@ class TestKillServer(unittest.TestCase):
     def test_kill_server(self):
         result = adb.kill_server()
         self.assertEqual(result[0], POSITIVE_EXP_RESULT)
-        adb.start_server()  # start server immediately in order to avoid fail of next test
 
 
 class TestStartServer(unittest.TestCase):
