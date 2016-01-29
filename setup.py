@@ -5,7 +5,9 @@ except ImportError:
     from distutils.core import setup
 
 requirements = [
+    'sure',
 ]
+
 
 test_requirements = [
 ]
