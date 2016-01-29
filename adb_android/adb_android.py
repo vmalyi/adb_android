@@ -46,35 +46,25 @@ def shell(cmd):
     return exec_command(adb_full_cmd)
 
 
-def _convert_opts(opts):
-    """
-    Convert list with command options to single string value
-    with 'space' delimeter
-    :param opts: list with space-delimeted values
-    :return: string with space-delimeted values
-    """
-    return ' '.join(opts)
-
-
 def install(apk, opts):
     """
     Install *.apk on target
-    :param opts: list command options (e.g. ["-r", "-a"])
     :param apk: string path to apk on host to install
+    :param opts: list command options (e.g. ["-r", "-a"])
     :return: result of exec_command() execution
     """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_INSTALL, _convert_opts(opts), apk]
     return exec_command(adb_full_cmd)
 
 
-def uninstall(apk, opt_k=''):
+def uninstall(app, opts):
     """
-
-    :param apk:
-    :param opt_k: keep the data and cache directories
-    :return:
+    Uninstall app from target
+    :param app: app name to uninstall from target (e.g. "com.example.android.valid")
+    :param opts: list command options (e.g. ["-r", "-a"])
+    :return: result of exec_command() execution
     """
-    adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_UNINSTALL, apk, opt_k]
+    adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_UNINSTALL, _convert_opts(opts), app]
     return exec_command(adb_full_cmd)
 
 
@@ -143,6 +133,15 @@ def get_state():
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_GET_STATE]
     return exec_command(adb_full_cmd)
 
+
+def _convert_opts(opts):
+    """
+    Convert list with command options to single string value
+    with 'space' delimeter
+    :param opts: list with space-delimeted values
+    :return: string with space-delimeted values
+    """
+    return ' '.join(opts)
 
 def exec_command(adb_full_cmd):
     """Executes adb command and handles result code.

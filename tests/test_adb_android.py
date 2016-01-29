@@ -204,7 +204,7 @@ class TestInstall(unittest.TestCase):
         result = adb.shell('pm list packages | grep ' + VALID_PACKAGE_NAME)
         if re.search(exp_install_cmd_output, result[1]):
             print('*** uninstalling existing ' + VALID_PACKAGE_NAME)
-            adb.uninstall(VALID_PACKAGE_NAME)
+            adb.uninstall(VALID_PACKAGE_NAME, [])
         else:
             print('*** no need to uninstall ' + VALID_PACKAGE_NAME + ' since\
             it is not yet installed')
@@ -237,7 +237,7 @@ class TestInstall(unittest.TestCase):
     def test_install_invalid_apk(self):
         opts = []
         result = adb.install(PATH_TO_INVALID_APK, opts)
-        self.assertRegexpMatches(result[1], 'INSTALL_FAILED_INVALID_APK')
+        result[1].should.match(r'INSTALL_FAILED_INVALID_APK')
 
 
 class TestUninstall(unittest.TestCase):
@@ -251,28 +251,22 @@ class TestUninstall(unittest.TestCase):
 
         if not re.search(exp_install_cmd_output, result[1]):
             print('*** installing ' + VALID_PACKAGE_NAME)
-            adb.install(PATH_TO_VALID_APK)
+            adb.install(PATH_TO_VALID_APK, [])
         else:
             print('*** no need to install ' + VALID_PACKAGE_NAME + ' since it is\
             already installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall(self):
-        global VALID_PACKAGE_NAME
-        result = adb.uninstall(VALID_PACKAGE_NAME)
-        self.assertRegexpMatches(result[1], 'Success')
-
-    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
-    def test_uninstall_keep_data(self):
-        global VALID_PACKAGE_NAME
-        result = adb.uninstall(VALID_PACKAGE_NAME, '-k')
-        self.assertRegexpMatches(result[1], 'Success')
+        opts = []
+        result = adb.uninstall(VALID_PACKAGE_NAME, opts)
+        result[1].should.match(r'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_invalid_package_name(self):
-        global INVALID_PACKAGE_NAME
-        result = adb.uninstall(INVALID_PACKAGE_NAME)
-        self.assertRegexpMatches(result[1], 'DELETE_FAILED_INTERNAL_ERROR')
+        opts = []
+        result = adb.uninstall(INVALID_PACKAGE_NAME, opts)
+        result[1].should.match(r'DELETE_FAILED_INTERNAL_ERROR')
 
 
 class TestGetSerialNumber(unittest.TestCase):
