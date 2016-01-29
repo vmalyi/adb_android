@@ -152,21 +152,21 @@ class TestExec(unittest.TestCase):
     def test_exec_adb_push(self):
         adb_push = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PUSH, tmp_file.name,
                     DEST_FOLDER_TARGET]
-        result = adb.exec_command(adb_push)
+        result = adb.____exec_command(adb_push)
         result.should.be(POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     @unittest.skip("AssertionError: (0, '') should be the same object as (0, ''), but it is not")
     def test_exec_adb_pull(self):
         adb_pull = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PULL, tmp_file_on_target,
                     dest_folder_host]
-        result = adb.exec_command(adb_pull)
+        result = adb.____exec_command(adb_pull)
         result.should.be(POSITIVE_EXP_RESULT_WO_OUTPUT)
 
     @unittest.skip("AssertionError: (0, '') should be the same object as (0, ''), but it is not")
     def test_exec_incomplete_argument(self):
         # 4th argument is missing in adb_command
         adb_command = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_PULL, tmp_file_on_target]
-        result = adb.exec_command(adb_command)
+        result = adb.____exec_command(adb_command)
         result.should.be(POSITIVE_EXP_RESULT_WO_OUTPUT)
 
 
