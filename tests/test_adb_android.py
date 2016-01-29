@@ -130,11 +130,12 @@ class TestDevices(unittest.TestCase):
     def test_devices(self):
         result = adb.devices()
         # don't check output code in result but presence of "device" string
-        self.assertRegexpMatches(result[1], '\\tdevice')
+        result[1].should.match(r'\tdevice')
 
-    def test_devices_l_option(self):
-        result = adb.devices('-l')
-        self.assertRegexpMatches(result[1], 'model:')
+    def test_devices_w_opt(self):
+        opts = ["-l"]
+        result = adb.devices(opts)
+        result[1].should.match(r'model:')
 
 
 class TestShell(unittest.TestCase):
@@ -211,8 +212,7 @@ class TestInstall(unittest.TestCase):
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_wo_opts(self):
-        opts = []
-        result = adb.install(PATH_TO_VALID_APK, opts)
+        result = adb.install(PATH_TO_VALID_APK)
         result[1].should.match(r'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
@@ -235,8 +235,7 @@ class TestInstall(unittest.TestCase):
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_install_invalid_apk(self):
-        opts = []
-        result = adb.install(PATH_TO_INVALID_APK, opts)
+        result = adb.install(PATH_TO_INVALID_APK)
         result[1].should.match(r'INSTALL_FAILED_INVALID_APK')
 
 
@@ -251,21 +250,19 @@ class TestUninstall(unittest.TestCase):
 
         if not re.search(exp_install_cmd_output, result[1]):
             print('*** installing ' + VALID_PACKAGE_NAME)
-            adb.install(PATH_TO_VALID_APK, [])
+            adb.install(PATH_TO_VALID_APK)
         else:
             print('*** no need to install ' + VALID_PACKAGE_NAME + ' since it is\
             already installed')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall(self):
-        opts = []
-        result = adb.uninstall(VALID_PACKAGE_NAME, opts)
+        result = adb.uninstall(VALID_PACKAGE_NAME)
         result[1].should.match(r'Success')
 
     @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_uninstall_invalid_package_name(self):
-        opts = []
-        result = adb.uninstall(INVALID_PACKAGE_NAME, opts)
+        result = adb.uninstall(INVALID_PACKAGE_NAME)
         result[1].should.match(r'DELETE_FAILED_INTERNAL_ERROR')
 
 

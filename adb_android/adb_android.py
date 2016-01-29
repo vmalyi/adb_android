@@ -26,13 +26,13 @@ def pull(src, dest):
     return exec_command(adb_full_cmd)
 
 
-def devices(opt_l=''):
+def devices(opts=[]):
     """
     Get list of all available devices including emulators
-    :param opt_l: provides additional info on device
+    :param opts: list command options (e.g. ["-r", "-a"])
     :return: result of exec_command() execution
     """
-    adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_DEVICES, opt_l]
+    adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_DEVICES, _convert_opts(opts)]
     return exec_command(adb_full_cmd)
 
 
@@ -46,7 +46,7 @@ def shell(cmd):
     return exec_command(adb_full_cmd)
 
 
-def install(apk, opts):
+def install(apk, opts=[]):
     """
     Install *.apk on target
     :param apk: string path to apk on host to install
@@ -57,7 +57,7 @@ def install(apk, opts):
     return exec_command(adb_full_cmd)
 
 
-def uninstall(app, opts):
+def uninstall(app, opts=[]):
     """
     Uninstall app from target
     :param app: app name to uninstall from target (e.g. "com.example.android.valid")
