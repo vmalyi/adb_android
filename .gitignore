@@ -66,3 +66,7 @@ tmp*
 # IntelliJ Idea
 .idea
 adb_android.iml
+
+# virtualenv
+bin/
+include/
