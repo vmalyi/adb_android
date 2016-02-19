@@ -140,7 +140,6 @@ def _exec_command(adb_cmd):
 
     try:
         output = check_output(final_adb_cmd, stderr=t)
-
     except CalledProcessError as e:
         t.seek(0)
         result = e.returncode, t.read()
