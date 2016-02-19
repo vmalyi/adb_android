@@ -266,9 +266,10 @@ class TestStartServer(unittest.TestCase):
 
 
 class TestGetState(unittest.TestCase):
+    @unittest.skipIf(is_emulator(), 'skip if run on emulator')
     def test_get_state(self):
         result = adb.get_state()
-        result[1].should.match(r'device\r\n')
+        result[1].should.match(r'device\n')
 
 
 if __name__ == '__main__':
