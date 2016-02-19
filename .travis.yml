@@ -10,8 +10,7 @@ before_script:
   - adb shell input keyevent 82 &
 install:
   #install adb library
-  - pip install setuptools==20.1.1 --user
-  - python setup.py install --user
+  - pip install -e .
 script:
   - python -m unittest discover
 notifications:
