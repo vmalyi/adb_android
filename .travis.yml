@@ -10,6 +10,7 @@ before_script:
   - adb shell input keyevent 82 &
 install:
   #install adb library
+  - pip install setuptools
   - python setup.py install --user
 script:
   - python -m unittest discover
