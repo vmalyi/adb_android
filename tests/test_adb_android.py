@@ -263,6 +263,10 @@ class TestSync(unittest.TestCase):
         result = adb.sync()
         result[0].should.be(POSITIVE_EXP_RESULT)
 
+class TestVersion(unittest.TestCase):
+    def test_version(self):
+        result = adb.version()
+        result[1].should.match(r'Android Debug Bridge version')
 
 if __name__ == '__main__':
     unittest.main()

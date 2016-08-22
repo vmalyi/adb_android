@@ -4,6 +4,14 @@ from subprocess import check_output, CalledProcessError
 import var as v
 
 
+def version():
+    """
+    Display the version of adb
+    :return: result of _exec_command() execution
+    """
+    adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_VERSION]
+    return _exec_command(adb_full_cmd)
+
 def push(src, dest):
     """
     Push object from host to target
