@@ -88,7 +88,7 @@ def wait_for_device():
 
 def sync():
     """
-    Perform a sync with device and host
+    Copy host->device only if changed
     :return: result of _exec_command() execution
     """
     adb_full_cmd = [v.ADB_COMMAND_PREFIX, v.ADB_COMMAND_SHELL ,v.ADB_COMMAND_SYNC]

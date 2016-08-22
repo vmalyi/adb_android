@@ -258,6 +258,11 @@ class TestGetState(unittest.TestCase):
         result = adb.get_state()
         result[1].should.match(r'device')
 
+class TestSync(unittest.TestCase):
+    def test_sync(self):
+        result = adb.sync()
+        result[0].should.be(POSITIVE_EXP_RESULT)
+
 
 if __name__ == '__main__':
     unittest.main()
