@@ -25,17 +25,17 @@ Currently following adb commands are **supported**:
 * adb start-server
 * adb kill-server
 * adb get-state
+* adb sync
+* adb version
 
 Currently following adb commands are **not supported**:
 
-* adb sync
 * adb forward
 * adb wait-for-device
 * adb logcat
 * adb bugreport
 * adb jdwp
 * adb help
-* adb version
 * adb -d
 * adb -e
 * adb -s
