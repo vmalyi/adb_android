@@ -272,7 +272,7 @@ class TestBugreport(unittest.TestCase):
     @unittest.skipUnless(is_device_available(), 'device not available')
     def test_bugreport(self):
         result = adb.bugreport()
-        result[0].should.match(POSITIVE_EXP_RESULT)
+        result[0].should.be(POSITIVE_EXP_RESULT)
 
 
 if __name__ == '__main__':
