@@ -268,5 +268,12 @@ class TestVersion(unittest.TestCase):
         result = adb.version()
         result[1].should.match(r'Android Debug Bridge version')
 
+class TestBugreport(unittest.TestCase):
+    @unittest.skipUnless(is_device_available(), 'device not available')
+    def test_bugreport(self):
+        result = adb.bugreport()
+        result[0].should.be(POSITIVE_EXP_RESULT)
+
+
 if __name__ == '__main__':
     unittest.main()
