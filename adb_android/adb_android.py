@@ -1,7 +1,7 @@
 import tempfile
 from subprocess import check_output, CalledProcessError, call
 
-import var as v
+from . import var as v
 
 def _isDeviceAvailable():
     """
