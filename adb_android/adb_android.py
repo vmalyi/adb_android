@@ -1,7 +1,7 @@
+from __future__ import print_function
 import tempfile
 from subprocess import check_output, CalledProcessError, call
-
-import var as v
+from . import var as v
 
 def _isDeviceAvailable():
     """
@@ -34,7 +34,7 @@ def bugreport(dest_file="default.log"):
     try:
         dest_file_handler = open(dest_file, "w")
     except IOError:
-        print "IOError: Failed to create a log file"
+        print("IOError: Failed to create a log file")
     
     # We have to check if device is available or not before executing this command
     # as adb bugreport will wait-for-device infinitely and does not come out of 
